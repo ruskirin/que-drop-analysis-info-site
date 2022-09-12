@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p class="processed-text">{{ form.text }}</p>
+
+  {% load static %}
+  <img src="../static/images/{{ text_dep_img }}">
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <br>
+    <input type="submit" value="Process">
+  </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, intitial-scale=1">
+  <link rel="stylesheet" href="../static/css/base.css">
+
+  {% block title %}
+    <title style="font-size: 3em;">Que-drop Analysis</title>
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="sidebar">
+      {% block sidebar %}
+        <span><a href="{% url 'index' %}">Home</a></span>
+        <span><a href="">Contributors</a></span>
+        <span><a href="{% url 'visualizer' %}">Spacy Visualizer</a></span>
+        <span><a href="">References</a></span>
+      {% endblock %}
+    </div>
+
+    <div class="content">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+  </div>
+</body>
+
+</html>
