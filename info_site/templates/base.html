@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, intitial-scale=1">
-  <link rel="stylesheet" href="../static/css/base.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'info_site/css/base.css' %}">
 
   {% block title %}
     <title style="font-size: 3em;">Que-drop Analysis</title>

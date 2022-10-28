@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <p class="processed-text">{{ form.text }}</p>
+  <p class="processed-text">{{ form.text.value }}</p>
 
-  {% load static %}
-  <img src="../static/images/{{ text_dep_img }}">
+  {% if text_dep_img %}
+    {% load static %}
+    <img src="{% static text_dep_img %}">
+  {% endif %}
 
   <form action="" method="post">
     {% csrf_token %}

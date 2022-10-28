@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import View
+from pathlib import Path
 from . import forms
+import logging
 
 import spacy
 from spacy import displacy
@@ -22,31 +23,35 @@ def spacy_visualizer(request):
         if form.is_valid():
             nlp = spacy.load('es_dep_news_trf')
 
+            # Tokenize the cleaned version of the entered text
             procd = nlp(form.cleaned_data['text'])
+            # Generate SVG of dependency tree of the text
             procd_img = displacy.render(
                 procd, style='dep', options=displacy_opts
             )
 
+            procd_filename = 'procd-image.svg'
+            procd_path = Path('./info_site/static/info_site/images/')
+            (procd_path/procd_filename).open('w', encoding='utf-8').write(procd_img)
+
             context = {
-                'text': form.cleaned_data['text'],
-                'text_dep_img': procd_img,
+                'form': form,
+                'text_dep_img': f'info_site/images/{procd_filename}',
             }
 
-            return render(request, 'visualizer.html', {'form': forms.TextVisualizerForm(initial=context)})
+            return render(
+                request,
+                'visualizer.html',
+                context=context
+            )
 
     else:
-        def_text = '@IsabelDK8 Hace unos días venía de estar varios días en Boquete, debo decir que al llegar a ese punto, la vista, la brisa, uno siente un gozo de contemplar la ciudad.'
-        def_img = 'placeholder-no-bad-days.jpg'
+        text = 'Sample Spanish text goes here!'
 
         form = forms.TextVisualizerForm(
             initial={
-                'text': def_text,
-                'text_dep_img': def_img,
+                'text': text,
             }
         )
 
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'visualizer.html', context)
+    return render(request, 'visualizer.html', context={'form': form})
