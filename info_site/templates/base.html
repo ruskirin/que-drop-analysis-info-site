@@ -7,6 +7,9 @@
         content="width=device-width, intitial-scale=1">
   {% load static %}
   <link rel="stylesheet" href="{% static 'info_site/css/base.css' %}">
+  {% block stylesheets %}
+    <!--Any additional stylesheets-->
+  {% endblock %}
 
   {% block title %}
     <title style="font-size: 3em;">Que-drop Analysis</title>
@@ -15,7 +18,6 @@
 
 <body>
   <div class="container">
-
     <div class="sidebar">
       {% block sidebar %}
         <span><a href="{% url 'index' %}">Home</a></span>

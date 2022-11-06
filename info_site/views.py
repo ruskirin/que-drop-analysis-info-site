@@ -13,7 +13,7 @@ def index(request):
 
 def spacy_visualizer(request):
     displacy_opts = {
-        'fine_grained': True,
+        'fine_grained': False,
         'compact': True,
     }
 
@@ -29,6 +29,11 @@ def spacy_visualizer(request):
             procd_img = displacy.render(
                 procd, style='dep', options=displacy_opts
             )
+            procd_dep_lin = ' '.join([f'{p.text}({p.dep_})' for p in procd])
+            procd_dep_explain = {p.dep_: spacy.explain(p.dep_) for p in procd}
+
+            # Test text:
+            # Siento que la ultima parte de la serie de Luismi estuvo re tirada de los pelos. Ademas que mariah wtf ese casting
 
             procd_filename = 'procd-image.svg'
             procd_path = Path('./info_site/static/info_site/images/')
@@ -37,6 +42,8 @@ def spacy_visualizer(request):
             context = {
                 'form': form,
                 'text_dep_img': f'info_site/images/{procd_filename}',
+                'text_dep_lin': procd_dep_lin,
+                'text_dep_explain': procd_dep_explain,
             }
 
             return render(

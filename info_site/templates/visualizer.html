@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block stylesheets %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'info_site/css/visualizer.css' %}">
+{% endblock %}
+
 {% block content %}
   <p class="processed-text">{{ form.text.value }}</p>
 
@@ -8,10 +13,22 @@
     <img src="{% static text_dep_img %}">
   {% endif %}
 
+  {% if text_dep_img %}
+    <p>Linear dependency tags:</p>
+    <p class="procd-text-dep-linear">{{ text_dep_lin }}</p>
+
+    <ul class="procd-text-dep-explain-list">
+      {% for dep, expl in text_dep_explain.items %}
+        <li>{{ dep }}: {{ expl }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
   <form action="" method="post">
     {% csrf_token %}
     {{ form }}
     <br>
     <input type="submit" value="Process">
   </form>
+
 {% endblock %}
